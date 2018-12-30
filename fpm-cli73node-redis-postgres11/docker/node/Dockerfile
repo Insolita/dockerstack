@@ -1,0 +1,2 @@
+FROM node:8
+EXPOSE 7777
