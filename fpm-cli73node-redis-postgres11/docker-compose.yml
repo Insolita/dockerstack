@@ -5,7 +5,7 @@ services:
      volumes:
        - ./docker/db/elastic:/usr/share/elasticsearch/data
      environment:
-       TZ: Europe/Moscow
+       TZ: ${DB_TIMEZONE}
      expose:
        - '9200'
        - '9300'
@@ -60,7 +60,7 @@ services:
       - XDEBUG_CONFIG=remote_host=host.docker.internal
     tty: true
   db:
-      image: postgres
+      image: 'postgres:11.1'
       restart: always
       expose:
         - 5432
