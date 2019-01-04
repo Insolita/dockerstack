@@ -21,7 +21,7 @@ RUN  apt-get update && \
             && docker-php-ext-enable xdebug \
             && docker-php-ext-enable redis \
             && docker-php-ext-install -j$(nproc) gd \
-            && docker-php-ext-install -j$(nproc) iconv \
+            && docker-php-ext-install -j$(nproc) pcntl \
             && docker-php-ext-install -j$(nproc) bcmath \
             && docker-php-ext-install -j$(nproc) intl \
             && docker-php-ext-install -j$(nproc) zip \

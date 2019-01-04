@@ -13,7 +13,7 @@ services:
        - '9200:9200'
        - '9300:9300'
   redis:
-     restart: always
+     restart: on-failure
      image: redis
      ports:
        - '63791:6379'
@@ -28,7 +28,7 @@ services:
       - 80
     ports:
       - 8008:80
-    restart: always
+    restart: on-failure
     links:
       - php
       - elasticsearch
@@ -36,7 +36,7 @@ services:
       - php
   php:
       build: docker/fpm
-      restart: always
+      restart: on-failure
       links:
         - db
         - redis
@@ -48,9 +48,10 @@ services:
         - XDEBUG_CONFIG=remote_host=host.docker.internal
   php-cli:
     build: docker/cli
-    restart: always
+    restart: on-failure
     links:
       - db
+      - testdb
       - redis
     volumes_from:
       - php
@@ -61,7 +62,7 @@ services:
     tty: true
   db:
       image: 'postgres:11.1'
-      restart: always
+      restart: on-failure
       expose:
         - 5432
       ports:
@@ -74,6 +75,21 @@ services:
         - POSTGRES_PASSWORD=${DB_PASSWORD}
       volumes:
         - ./docker/db/postgres:/var/lib/postgresql/data
+  testdb:
+      image: 'postgres:11.1'
+      restart: on-failure
+      expose:
+        - 5432
+      ports:
+        - '12340:5432'
+      environment:
+        - TZ=${DB_TIMEZONE}
+        - PGTZ=${DB_TIMEZONE}
+        - POSTGRES_DB=${DB_TEST_DATABASE}
+        - POSTGRES_USER=${DB_USERNAME}
+        - POSTGRES_PASSWORD=${DB_PASSWORD}
+      volumes:
+        - ./docker/db/testdb:/var/lib/postgresql/data
   node:
       image: "node:8-alpine"
       user: "node"
