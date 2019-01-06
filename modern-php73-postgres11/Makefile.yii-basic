@@ -1,0 +1,37 @@
+chmod:
+	sudo chown -R ${USER}:www-data runtime
+	sudo chown -R ${USER}:www-data web/assets
+	sudo chown -R ${USER}:www-data web/upload
+	sudo chmod -R 0777 runtime
+    sudo chmod -R 0777 web/assets
+    sudo chmod -R 0777 web/upload
+	sudo chmod +x yii
+cupd:
+	docker-compose run --rm php-cli composer update
+cinst:
+	docker-compose run --rm php-cli composer install
+redis:
+	docker-compose exec redis redis-cli
+nodeinit:
+	docker-compose run --rm node yarn install
+noderun:
+	docker-compose run --rm node yarn run dev
+nodeprod:
+	docker-compose run --rm node yarn run prod
+nodehot:
+	docker-compose run --rm node yarn run hot
+nodelive:
+	docker-compose run --rm node yarn run watch
+cli:
+	docker-compose exec php-cli bash
+tink:
+	docker-compose exec php-cli php yii shell
+migrate:
+	docker-compose run --rm php-cli php yii migrate
+test-migrate:
+	docker-compose run --rm php-cli php yii migrate --db=testdb
+queue:
+	docker-compose exec php-cli php yii queue/listen
+init:
+	chmod cinst migrate nodeinit
+
