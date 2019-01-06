@@ -1,7 +1,10 @@
 ### Docker stack collection
 
- - Stack with latest php and postgres versions, useful for laravel development
+#### modern -php73-postgres11
 
+ 
+ - Stack with latest php and postgres versions
+ 
     - php-fpm 7.3
 
     - php-cli 7.3 (with composer)
@@ -18,4 +21,7 @@
 
     Makefile with common aliases
 
+#### ssk-certs-build
 
+
+ - small wrapper for quick self-signed ssl key generation for local development
