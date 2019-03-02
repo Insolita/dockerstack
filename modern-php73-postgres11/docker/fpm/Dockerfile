@@ -45,6 +45,7 @@ RUN echo "xdebug.idekey = PHPSTORM" >> $XDEBUGINI_PATH && \
     echo "xdebug.profiler_enable = 0" >> $XDEBUGINI_PATH
 
 RUN usermod -u 1000 www-data
+RUN groupmod -g 1000 www-data
 
 EXPOSE 9000
 CMD ["php-fpm"]

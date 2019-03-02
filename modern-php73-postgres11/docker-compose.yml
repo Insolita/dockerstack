@@ -48,7 +48,13 @@ services:
         - PHP_XDEBUG_ENABLED=1
         - XDEBUG_CONFIG=remote_host=host.docker.internal
   php-cli:
-    build: docker/cli
+    build:
+      context: docker/cli
+      args:
+          - USER=appuser
+          - GROUP=appuser
+          - GID=1000
+          - UID=1000
     restart: on-failure
     links:
       - db
