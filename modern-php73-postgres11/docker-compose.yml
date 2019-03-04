@@ -91,7 +91,7 @@ services:
           appnet:
               ipv4_address: 172.20.0.6
   db:
-      image: 'postgres:11.1'
+      image: 'postgres:11.2'
       restart: on-failure
       expose:
         - 5432
@@ -109,7 +109,7 @@ services:
           appnet:
               ipv4_address: 172.20.0.7
   testdb:
-      image: 'postgres:11.1'
+      image: 'postgres:11.2'
       restart: on-failure
       expose:
         - 5432
