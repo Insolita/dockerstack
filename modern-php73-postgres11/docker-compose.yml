@@ -69,12 +69,6 @@ services:
   php-cli:
       build:
           context: docker/cli
-          args:
-              - USER=appuser
-              - GROUP=appuser
-              - GID=1000
-              - UID=1000
-              - ALLOW_SUDO=1
       restart: on-failure
       links:
           - db
@@ -131,7 +125,7 @@ services:
       user: "node"
       working_dir: /app
       environment:
-        - NODE_ENV=development
+        - NODE_ENV=${NODE_ENV}
       volumes:
         - .:/app
       expose:
