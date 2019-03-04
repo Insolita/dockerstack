@@ -10,10 +10,11 @@ RUN echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache
 
 ARG USERNAME=appuser
 ARG GROUP=appuser
+ARG PASSWD=pass
 ARG UID=1000
 ARG GID=1000
 ARG HOME=/home/$USERNAME
-
+ARG ALLOW_SUDO=0
 
 RUN  apt-get update && \
      apt-get install -y --no-install-recommends \
@@ -49,8 +50,8 @@ RUN  apt-get update && \
 RUN groupadd --gid $GID $GROUP \
             && useradd --groups ${GROUP},sudo \
             --uid $UID --gid $GID --shell /bin/bash --create-home --home $HOME $USERNAME \
-            && echo "pass\npass\n"| passwd $USERNAME\
-            && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+            && echo "${PASSWD}\n${PASSWD}\n"|passwd  $USERNAME &&\
+            if [ $ALLOW_SUDO -eq 1 ]; then echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers; fi
 
 # Initialize application
 WORKDIR /app
