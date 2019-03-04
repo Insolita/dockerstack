@@ -1,11 +1,11 @@
 chmod:
-	sudo chown -R ${USER}:www-data runtime
-	sudo chown -R ${USER}:www-data web/assets
-	sudo chown -R ${USER}:www-data web/upload
-	sudo chmod -R 0777 runtime
-    sudo chmod -R 0777 web/assets
-    sudo chmod -R 0777 web/upload
-	sudo chmod +x yii
+	chown -R ${USER}:www-data runtime
+	chown -R ${USER}:www-data web/assets
+	chown -R ${USER}:www-data web/upload
+	chmod -R 0777 runtime
+    chmod -R 0777 web/assets
+    chmod -R 0777 web/upload
+	chmod +x yii
 cupd:
 	docker-compose run --rm php-cli composer update
 cinst:
@@ -32,6 +32,4 @@ test-migrate:
 	docker-compose run --rm php-cli php yii migrate --db=testdb
 queue:
 	docker-compose exec php-cli php yii queue/listen
-init:
-	chmod cinst migrate nodeinit
 
