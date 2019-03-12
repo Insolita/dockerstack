@@ -70,7 +70,7 @@ services:
       build:
           context: docker/cli_noroot
           args:
-              - USER=appuser
+              - USERNAME=appuser
               - GROUP=appuser
               - GID=1000
               - UID=1000
